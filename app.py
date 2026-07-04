@@ -109,9 +109,6 @@ def doctor_availability():
     return render_template('doctor_availability.html', slots=slots)
 @app.route('/patient/doctors')
 def patient_doctors():
-    if 'user_id' not in session or session['role'] != 'patient':
-        return redirect(url_for('login'))
-
     conn = get_db()
     doctors = conn.execute('''
         SELECT doctors.id, users.name, doctors.specialization, doctors.experience, doctors.fee
@@ -121,21 +118,40 @@ def patient_doctors():
     return render_template('patient_doctors.html', doctors=doctors)
 @app.route('/patient/book/<int:doctor_id>', methods=['GET', 'POST'])
 def book_appointment(doctor_id):
-    if 'user_id' not in session or session['role'] != 'patient':
-        return redirect(url_for('login'))
-
     conn = get_db()
 
     if request.method == 'POST':
         slot_id = request.form['slot_id']
-        conn.execute('INSERT INTO appointments (patient_id, doctor_id, slot_id, status) VALUES (?, ?, ?, ?)', (session['user_id'], doctor_id, slot_id, 'pending'))
-        conn.execute('UPDATE availability SET is_booked = 1 WHERE id = ?', (slot_id,))
+        problem = request.form['problem']
+        patient_name = request.form['patient_name']
+        patient_phone = request.form['patient_phone']
+
+        count = conn.execute(
+            'SELECT COUNT(*) as cnt FROM appointments WHERE slot_id = ? AND status != "cancelled"',
+            (slot_id,)
+        ).fetchone()['cnt']
+
+        if count >= 20:
+            conn.close()
+            return "Ee slot full ayyindi (20 patients). Mari slot try cheyandi. <a href='/patient/book/{}'>Back</a>".format(doctor_id)
+
+        token_number = count + 1
+
+        conn.execute(
+            '''INSERT INTO appointments 
+               (doctor_id, slot_id, problem, token_number, patient_name, patient_phone, status)
+               VALUES (?, ?, ?, ?, ?, ?, ?)''',
+            (doctor_id, slot_id, problem, token_number, patient_name, patient_phone, 'pending')
+        )
         conn.commit()
         conn.close()
-        return redirect(url_for('patient_doctors'))
+        return f"Appointment booked! Mee token number: {token_number}. <a href='/patient/doctors'>Back to doctors</a>"
 
-    slots = conn.execute('SELECT * FROM availability WHERE doctor_id = ? AND is_booked = 0', (doctor_id,)).fetchall()
-    doctor = conn.execute('SELECT users.name, doctors.specialization FROM doctors JOIN users ON doctors.user_id = users.id WHERE doctors.id = ?', (doctor_id,)).fetchone()
+    slots = conn.execute('SELECT * FROM availability WHERE doctor_id = ?', (doctor_id,)).fetchall()
+    doctor = conn.execute(
+        'SELECT users.name, doctors.specialization FROM doctors JOIN users ON doctors.user_id = users.id WHERE doctors.id = ?',
+        (doctor_id,)
+    ).fetchone()
     conn.close()
     return render_template('book_appointment.html', slots=slots, doctor=doctor, doctor_id=doctor_id)
 @app.route('/patient/appointments')
@@ -154,7 +170,15 @@ def doctor_appointments():
 
     conn = get_db()
     doctor = conn.execute('SELECT * FROM doctors WHERE user_id = ?', (session['user_id'],)).fetchone()
-    appointments = conn.execute('SELECT appointments.id, users.name, availability.date, availability.time_slot, appointments.status FROM appointments JOIN users ON appointments.patient_id = users.id JOIN availability ON appointments.slot_id = availability.id WHERE appointments.doctor_id = ?', (doctor['id'],)).fetchall()
+    appointments = conn.execute('''
+        SELECT appointments.id, appointments.problem, appointments.status,
+               appointments.patient_name, appointments.patient_phone,
+               availability.date, availability.time_slot
+        FROM appointments
+        JOIN availability ON appointments.slot_id = availability.id
+        WHERE appointments.doctor_id = ?
+        ORDER BY availability.date, availability.time_slot, appointments.token_number
+    ''', (doctor['id'],)).fetchall()
     conn.close()
     return render_template('doctor_appointments.html', appointments=appointments)
 
@@ -182,5 +206,16 @@ def admin_dashboard():
     appointments = conn.execute('SELECT appointments.id, patients.name AS patient_name, doctors_users.name AS doctor_name, availability.date, availability.time_slot, appointments.status FROM appointments JOIN users AS patients ON appointments.patient_id = patients.id JOIN doctors ON appointments.doctor_id = doctors.id JOIN users AS doctors_users ON doctors.user_id = doctors_users.id JOIN availability ON appointments.slot_id = availability.id').fetchall()
     conn.close()
     return render_template('admin_dashboard.html', users=users, appointments=appointments)
+@app.route('/admin/delete_user/<int:user_id>')
+def delete_user(user_id):
+    if 'user_id' not in session or session['role'] != 'admin':
+        return redirect(url_for('login'))
+
+    conn = get_db()
+    conn.execute('DELETE FROM doctors WHERE user_id = ?', (user_id,))
+    conn.execute('DELETE FROM users WHERE id = ?', (user_id,))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('admin_dashboard'))
 if __name__ == '__main__':
     app.run(debug=True)

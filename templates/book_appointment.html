@@ -10,12 +10,21 @@
     <p>Specialization: {{ doctor['specialization'] }}</p>
 
     <form method="POST">
+        <label>Your Name:</label><br>
+        <input type="text" name="patient_name" required><br><br>
+
+        <label>Phone Number:</label><br>
+        <input type="tel" name="patient_phone" required><br><br>
+
         <label>Select Available Slot:</label><br>
         <select name="slot_id" required>
             {% for slot in slots %}
             <option value="{{ slot['id'] }}">{{ slot['date'] }} | {{ slot['time_slot'] }}</option>
             {% endfor %}
         </select><br><br>
+
+        <label>Problem/Reason for visit:</label><br>
+        <textarea name="problem" rows="3" cols="30" required placeholder="Mee problem enti detail ga cheppandi"></textarea><br><br>
 
         <button type="submit">Confirm Booking</button>
     </form>

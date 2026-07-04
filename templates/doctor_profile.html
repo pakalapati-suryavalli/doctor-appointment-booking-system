@@ -4,9 +4,36 @@
     <meta charset="UTF-8">
     <title>Doctor Profile</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .topbar {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 15px;
+        }
+        .topbar a {
+            background: rgba(255,255,255,0.15);
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+        .topbar a:hover {
+            background: rgba(255,255,255,0.25);
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
-    <h2>Complete Your Doctor Profile</h2>
+    <div class="topbar">
+        <a href="/doctor/appointments">📋 View My Appointments</a>
+    </div>
+
+    <h1>👨‍⚕️ Complete Your Doctor Profile</h1>
+    <p>Add your professional details so patients can find and book you</p>
+
     <form method="POST">
         <label>Specialization:</label><br>
         <input type="text" name="specialization" placeholder="e.g. Cardiologist" required><br><br>
