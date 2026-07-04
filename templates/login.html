@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="auth-wrapper">
+        <div class="auth-side">
+            <h1>MediCare+</h1>
+            <p>Book appointments with trusted doctors, anytime, anywhere.</p>
+        </div>
+        <div class="auth-form-side">
+            <form method="POST">
+                <h2>Welcome Back</h2>
+                <label>Email</label>
+                <input type="email" name="email" required>
+                <label>Password</label>
+                <input type="password" name="password" required>
+                <button type="submit">Login</button>
+            </form>
+            <p class="switch-link">Don't have an account? <a href="/signup">Sign up here</a></p>
+        </div>
+    </div>
+</body>
+</html>

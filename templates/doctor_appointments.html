@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Appointments</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h2>Patient Appointments</h2>
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>Patient</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        {% for appt in appointments %}
+        <tr>
+            <td>{{ appt['name'] }}</td>
+            <td>{{ appt['date'] }}</td>
+            <td>{{ appt['time_slot'] }}</td>
+            <td>{{ appt['status'] }}</td>
+            <td>
+                {% if appt['status'] == 'pending' %}
+                <a href="/doctor/appointment/{{ appt['id'] }}/approve">Approve</a> |
+                <a href="/doctor/appointment/{{ appt['id'] }}/cancel">Cancel</a>
+                {% else %}
+                -
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

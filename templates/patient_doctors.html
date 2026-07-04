@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Find a Doctor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h2>Available Doctors</h2>
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>Name</th>
+            <th>Specialization</th>
+            <th>Experience</th>
+            <th>Fee</th>
+            <th>Action</th>
+        </tr>
+        {% for doc in doctors %}
+        <tr>
+            <td>{{ doc['name'] }}</td>
+            <td>{{ doc['specialization'] }}</td>
+            <td>{{ doc['experience'] }} years</td>
+            <td>₹{{ doc['fee'] }}</td>
+            <td><a href="/patient/book/{{ doc['id'] }}">Book Appointment</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

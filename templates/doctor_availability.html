@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor Availability</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h2>Manage Your Availability</h2>
+
+    <form method="POST">
+        <label>Date:</label><br>
+        <input type="date" name="date" required><br><br>
+
+        <label>Time Slot:</label><br>
+        <select name="time_slot" required>
+            <option value="10:00 AM - 11:00 AM">10:00 AM - 11:00 AM</option>
+            <option value="11:00 AM - 12:00 PM">11:00 AM - 12:00 PM</option>
+            <option value="2:00 PM - 3:00 PM">2:00 PM - 3:00 PM</option>
+            <option value="4:00 PM - 5:00 PM">4:00 PM - 5:00 PM</option>
+        </select><br><br>
+
+        <button type="submit">Add Slot</button>
+    </form>
+
+    <h3>Your Slots</h3>
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+        </tr>
+        {% for slot in slots %}
+        <tr>
+            <td>{{ slot['date'] }}</td>
+            <td>{{ slot['time_slot'] }}</td>
+            <td>{{ 'Booked' if slot['is_booked'] else 'Available' }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Appointments</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h2>My Appointments</h2>
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>Doctor</th>
+            <th>Specialization</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+        </tr>
+        {% for appt in appointments %}
+        <tr>
+            <td>Dr. {{ appt['name'] }}</td>
+            <td>{{ appt['specialization'] }}</td>
+            <td>{{ appt['date'] }}</td>
+            <td>{{ appt['time_slot'] }}</td>
+            <td>{{ appt['status'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p><a href="/patient/doctors">Book Another Appointment</a></p>
+</body>
+</html>

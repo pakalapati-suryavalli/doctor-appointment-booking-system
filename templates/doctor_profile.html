@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h2>Complete Your Doctor Profile</h2>
+    <form method="POST">
+        <label>Specialization:</label><br>
+        <input type="text" name="specialization" placeholder="e.g. Cardiologist" required><br><br>
+
+        <label>Experience (years):</label><br>
+        <input type="number" name="experience" required><br><br>
+
+        <label>Consultation Fee (₹):</label><br>
+        <input type="number" name="fee" required><br><br>
+
+        <button type="submit">Save Profile</button>
+    </form>
+</body>
+</html>

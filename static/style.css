@@ -1,0 +1,220 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #0ea5a4, #4f46e5);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    color: #1e293b;
+}
+
+h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 21px;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 20px 0 18px 0;
+}
+
+h3 {
+    font-size: 17px;
+    font-weight: 600;
+    color: #475569;
+    margin: 15px 0 10px 0;
+}
+
+p {
+    color: #e0f2f1;
+    font-size: 14px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* ===== Plain forms (signup, profile, availability, booking) ===== */
+form {
+    background: #ffffff;
+    border: none;
+    border-radius: 14px;
+    padding: 36px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 20px 45px rgba(15, 23, 42, 0.25);
+}
+
+label {
+    font-weight: 500;
+    font-size: 13px;
+    color: #475569;
+    display: block;
+    margin-bottom: 6px;
+    margin-top: 14px;
+}
+
+label:first-of-type {
+    margin-top: 0;
+}
+
+input, select {
+    padding: 11px 14px;
+    border: 1.5px solid #dbe3ea;
+    border-radius: 8px;
+    width: 100%;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #0d9488;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(13,148,136,0.15);
+}
+
+button {
+    background: linear-gradient(135deg, #0d9488, #4f46e5);
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14.5px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    width: 100%;
+    margin-top: 22px;
+    transition: opacity 0.15s;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+/* ===== Tables (dashboards, lists) ===== */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 950px;
+    background: #ffffff;
+    border: none;
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 25px;
+    box-shadow: 0 20px 45px rgba(15, 23, 42, 0.2);
+}
+
+th, td {
+    padding: 14px 18px;
+    text-align: left;
+    font-size: 14px;
+}
+
+th {
+    background: #0f172a;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.6px;
+    font-weight: 600;
+}
+
+td {
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover td {
+    background-color: #f0fdfa;
+}
+
+/* ===== Links ===== */
+a {
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+td a, .switch-link a {
+    color: #0d9488;
+}
+
+/* ===== Login/Signup split layout ===== */
+.auth-wrapper {
+    display: flex;
+    width: 100%;
+    max-width: 880px;
+    min-height: 460px;
+    background: #ffffff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+}
+
+.auth-side {
+    flex: 1;
+    background: linear-gradient(160deg, #0d9488, #4f46e5);
+    color: white;
+    padding: 50px 42px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.auth-side h1 {
+    color: white;
+    font-size: 30px;
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.auth-side p {
+    color: #e0f2f1;
+    text-align: left;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.auth-form-side {
+    flex: 1;
+    padding: 55px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #ffffff;
+}
+
+.auth-form-side form {
+    box-shadow: none;
+    padding

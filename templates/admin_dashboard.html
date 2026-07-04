@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h2>Admin Dashboard</h2>
+
+    <h3>All Users</h3>
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{ user['name'] }}</td>
+            <td>{{ user['email'] }}</td>
+            <td>{{ user['role'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h3>All Appointments</h3>
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>Patient</th>
+            <th>Doctor</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+        </tr>
+        {% for appt in appointments %}
+        <tr>
+            <td>{{ appt['patient_name'] }}</td>
+            <td>Dr. {{ appt['doctor_name'] }}</td>
+            <td>{{ appt['date'] }}</td>
+            <td>{{ appt['time_slot'] }}</td>
+            <td>{{ appt['status'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
