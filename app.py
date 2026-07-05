@@ -217,5 +217,31 @@ def delete_user(user_id):
     conn.commit()
     conn.close()
     return redirect(url_for('admin_dashboard'))
+@app.route('/patient/status', methods=['GET', 'POST'])
+def check_status():
+    appointments = None
+    if request.method == 'POST':
+        phone = request.form['patient_phone']
+        conn = get_db()
+        appointments = conn.execute('''
+            SELECT appointments.id, appointments.token_number, appointments.problem, appointments.status,
+                   appointments.patient_name, users.name as doctor_name,
+                   availability.date, availability.time_slot
+            FROM appointments
+            JOIN doctors ON appointments.doctor_id = doctors.id
+            JOIN users ON doctors.user_id = users.id
+            JOIN availability ON appointments.slot_id = availability.id
+            WHERE appointments.patient_phone = ?
+            ORDER BY availability.date DESC
+        ''', (phone,)).fetchall()
+        conn.close()
+    return render_template('check_status.html', appointments=appointments)
+@app.route('/patient/appointment/<int:appt_id>/delete', methods=['POST'])
+def delete_appointment(appt_id):
+    conn = get_db()
+    conn.execute('DELETE FROM appointments WHERE id = ?', (appt_id,))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('check_status'))
 if __name__ == '__main__':
     app.run(debug=True)

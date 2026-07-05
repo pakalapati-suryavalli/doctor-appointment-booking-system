@@ -2,179 +2,184 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Doctor Appointment System</title>
+    <title>CareConnect Hospital</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: #f4f7fb;
-            color: #1e293b;
-            display: block !important;
-            min-height: auto !important;
+        html, body {
+            height: 100% !important;
+            margin: 0 !important;
             padding: 0 !important;
-            align-items: initial !important
-            justify-content: initial !important
         }
-        .navbar {
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif !important;
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: stretch !important;
+            justify-content: flex-start !important;
+            min-height: 100vh !important;
+        }
+        .left-panel {
+            flex: 1;
+            background: #0c4a6e !important;
+            color: #ffffff;
+            padding: 60px 50px;
             display: flex;
+            flex-direction: column;
             justify-content: space-between;
-            align-items: center;
-            padding: 18px 40px;
+        }
+        .logo-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
             background: #ffffff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-        }
-        .navbar .logo {
-            font-size: 20px;
-            font-weight: 700;
-            color: #1d4ed8;
-        }
-        .navbar .logo span { color: #16a34a; }
-        .navbar a {
-            text-decoration: none;
-            color: #1d4ed8;
-            font-weight: 600;
-            padding: 10px 20px;
-            border: 1px solid #1d4ed8;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-        .hero {
-            text-align: center;
-            padding: 80px 20px 60px;
-            background: linear-gradient(135deg, #eff6ff 0%, #f4f7fb 100%);
-        }
-        .hero .icon { font-size: 56px; margin-bottom: 15px; }
-        .hero h1 {
-            font-size: 38px;
-            font-weight: 800;
-            color: #0f172a;
-            margin-bottom: 12px;
-        }
-        .hero p {
-            font-size: 17px;
-            color: #475569;
-            margin-bottom: 35px;
-        }
-        .btn {
-            display: inline-block;
-            padding: 16px 34px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-size: 17px;
-            font-weight: 700;
-            margin: 8px;
-        }
-        .btn-primary {
-            background: #16a34a;
-            color: white;
-            box-shadow: 0 8px 20px rgba(22,163,74,0.3);
-        }
-        .stats {
             display: flex;
+            align-items: center;
             justify-content: center;
-            gap: 60px;
-            padding: 50px 20px;
-            background: white;
-            flex-wrap: wrap;
+            font-size: 28px;
+            margin-bottom: 20px;
         }
-        .stat { text-align: center; }
-        .stat .num {
-            font-size: 32px;
-            font-weight: 800;
-            color: #1d4ed8;
+        .tag {
+            color: #7dd3fc;
+            font-size: 12px;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            margin-bottom: 10px;
         }
-        .stat .label {
+        .left-panel h1 {
+            font-size: 40px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        .left-panel .desc {
+            color: #bae6fd;
             font-size: 14px;
-            color: #64748b;
-            margin-top: 4px;
+            max-width: 320px;
+            line-height: 1.6;
         }
-        .features {
-            padding: 60px 40px;
-            text-align: center;
+        .bottom-stats {
+            display: flex;
+            gap: 50px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 25px;
         }
-        .features h2 {
+        .bottom-stats .num {
+            color: #7dd3fc;
             font-size: 26px;
-            margin-bottom: 40px;
-            color: #0f172a;
+            font-weight: 700;
         }
-        .feature-grid {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
+        .bottom-stats .label {
+            font-size: 12px;
+            color: #bae6fd;
         }
-        .feature-card {
-            background: white;
-            border-radius: 14px;
-            padding: 30px;
-            width: 240px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-        .feature-card .emoji { font-size: 34px; margin-bottom: 12px; }
-        .feature-card h3 { font-size: 17px; margin-bottom: 8px; color: #0f172a; }
-        .feature-card p { font-size: 14px; color: #64748b; }
-        footer {
-            text-align: center;
-            padding: 25px;
-            color: #94a3b8;
+        .contact {
             font-size: 13px;
+            color: #bae6fd;
+            margin-top: 15px;
+        }
+        .staff-login-left {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 10px 20px;
+            border: 1.5px solid rgba(255,255,255,0.5);
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .staff-login-left:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        .right-panel {
+            flex: 1;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+        .right-box {
+            width: 100%;
+            max-width: 380px;
+        }
+        .right-box .tag {
+            color: #0c4a6e;
+            opacity: 0.7;
+        }
+        .right-box h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0c4a6e;
+            margin-bottom: 8px;
+        }
+        .right-box p.sub {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+        .action-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            margin-bottom: 14px;
+            border-radius: 10px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 15px;
+        }
+        .btn-book {
+            background: #0c4a6e;
+            color: white;
+        }
+        .btn-status {
+            background: white;
+            color: #0c4a6e;
+            border: 1.5px solid #0c4a6e;
         }
     </style>
 </head>
 <body>
 
-    <div class="navbar">
-        <div class="logo">🏥 Care<span>Connect</span></div>
-        <a href="/login">Doctor / Admin Login</a>
-    </div>
-
-    <div class="hero">
-        <div class="icon">🏥</div>
-        <h1>Doctor Appointment Booking System</h1>
-        <p>Book appointments with trusted doctors quickly, easily, and without any hassle.</p>
-        <a href="/patient/doctors" class="btn btn-primary">📅 Book an Appointment</a>
-    </div>
-
-    <div class="stats">
-        <div class="stat">
-            <div class="num">20+</div>
-            <div class="label">Expert Doctors</div>
+    <div class="left-panel">
+        <div>
+            <div class="logo-circle">🏥</div>
+            <div class="tag">EST. — CARE CONNECT</div>
+            <h1>CareConnect<br>Hospital</h1>
+            <p class="desc">Visakhapatnam — appointments, doctors, and patient care, all in one place.</p>
         </div>
-        <div class="stat">
-            <div class="num">500+</div>
-            <div class="label">Happy Patients</div>
-        </div>
-        <div class="stat">
-            <div class="num">24/7</div>
-            <div class="label">Support</div>
-        </div>
-    </div>
-
-    <div class="features">
-        <h2>Why Choose Us</h2>
-        <div class="feature-grid">
-            <div class="feature-card">
-                <div class="emoji">⚡</div>
-                <h3>Instant Booking</h3>
-                <p>Book appointments in seconds without any login hassle.</p>
+        <div>
+            <div class="bottom-stats">
+                <div>
+                    <div class="num">20+</div>
+                    <div class="label">Expert Doctors</div>
+                </div>
+                <div>
+                    <div class="num">500+</div>
+                    <div class="label">Happy Patients</div>
+                </div>
+                <div>
+                    <div class="num">24/7</div>
+                    <div class="label">Support</div>
+                </div>
             </div>
-            <div class="feature-card">
-                <div class="emoji">👨‍⚕️</div>
-                <h3>Verified Doctors</h3>
-                <p>All doctors are qualified and experienced professionals.</p>
-            </div>
-            <div class="feature-card">
-                <div class="emoji">📋</div>
-                <h3>Token System</h3>
-                <p>Get a token number and know your queue position.</p>
-            </div>
+            <div class="contact">📞 +91 7981793941 · careconnect@hospital.com</div>
+            <a href="/login" class="staff-login-left">Staff Login →</a>
         </div>
     </div>
 
-    <footer>
-        © 2026 careconnect Hospital. All rights reserved.
-    </footer>
+    <div class="right-panel">
+        <div class="right-box">
+            <div class="tag">PATIENT ACCESS</div>
+            <h2>Book Your Visit</h2>
+            <p class="sub">No login needed — book an appointment or check your status.</p>
+
+            <a href="/patient/doctors" class="action-btn btn-book">📅 Book an Appointment</a>
+            <a href="/patient/status" class="action-btn btn-status">🔍 Check Appointment Status</a>
+        </div>
+    </div>
 
 </body>
 </html>

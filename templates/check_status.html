@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Check Appointment Status</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif !important;
+            background: #1e1033 !important;
+            display: block !important;
+            min-height: 100vh !important;
+            padding: 0 !important;
+        }
+        .topbar {
+            background: #4c1d95;
+            padding: 18px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .topbar .brand { color: white; font-weight: 800; font-size: 17px; }
+        .topbar a { color: #ede9fe; text-decoration: none; font-size: 13px; font-weight: 600; }
+
+        .page-wrap { max-width: 480px; margin: 0 auto; padding: 40px 20px 60px; }
+
+        .search-box {
+            background: #2e1a4d;
+            padding: 28px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            border: 1px solid #4c2a7a;
+        }
+        .search-box h1 { color: white; font-size: 19px; margin-bottom: 5px; }
+        .search-box p { color: #c4b5fd; font-size: 13px; margin-bottom: 20px; }
+        .search-box input {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1.5px solid #4c2a7a;
+            border-radius: 10px;
+            font-size: 14px;
+            margin-bottom: 12px;
+            background: #1e1033;
+            color: white;
+        }
+        .search-box input::placeholder { color: #8b7bb8; }
+        .search-box button {
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(135deg, #a78bfa, #4c1d95);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .ticket {
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            margin-bottom: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        .ticket-top {
+            background: linear-gradient(135deg, #a78bfa, #4c1d95);
+            color: white;
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .ticket-top .brand { font-size: 14px; font-weight: 800; }
+        .ticket-top .brand small { display:block; font-size: 9px; letter-spacing:1px; color:#ede9fe; font-weight:600; margin-top:2px; }
+        .status-pill { padding: 5px 12px; border-radius: 20px; font-size: 10px; font-weight: 800; letter-spacing: 0.5px; }
+        .pill-approved { background: #22c55e; color: white; }
+        .pill-pending { background: #eab308; color: white; }
+        .pill-rejected { background: #ef4444; color: white; }
+
+        .ticket-main { padding: 24px; display: flex; gap: 18px; }
+        .ticket-token { background: #f5f3ff; border-radius: 12px; padding: 14px 10px; text-align: center; min-width: 78px; }
+        .ticket-token .tk-label { font-size: 9px; color: #7c6a9c; letter-spacing: 0.5px; }
+        .ticket-token .tk-num { font-size: 34px; font-weight: 800; color: #4c1d95; line-height: 1; margin-top: 4px; }
+        .ticket-info { flex: 1; }
+        .ticket-info .name { font-size: 17px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+        .ticket-info .doc { font-size: 13px; color: #4c1d95; font-weight: 600; margin-bottom: 8px; }
+        .ticket-info .row { font-size: 12px; color: #64748b; margin-bottom: 2px; }
+        .ticket-info .row b { color: #334155; }
+
+        .perforation { border-top: 2px dashed #e2d9f7; margin: 0 24px; position: relative; }
+        .perforation::before, .perforation::after {
+            content: ''; position: absolute; top: -10px; width: 20px; height: 20px;
+            background: #1e1033; border-radius: 50%;
+        }
+        .perforation::before { left: -34px; }
+        .perforation::after { right: -34px; }
+
+        .ticket-footer { display: flex; gap: 10px; padding: 18px 24px; }
+        .footer-btn { flex: 1; padding: 11px; border-radius: 10px; font-weight: 700; font-size: 13px; text-align: center; cursor: pointer; border: none; }
+        .btn-download { background: #4c1d95; color: white; }
+        .btn-delete { background: #fee2e2; color: #dc2626; }
+
+        .no-results { text-align:center; color:#c4b5fd; padding: 20px 0; }
+        .back-link { display: block; text-align: center; margin-top: 10px; color: #c4b5fd; text-decoration: none; font-size: 13px; }
+
+        @media print {
+            body { visibility: hidden; background: white !important; }
+            .printing-now { visibility: visible; position: absolute; left: 0; top: 0; width: 100%; }
+            .printing-now * { visibility: visible; }
+            .printing-now .ticket-footer { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topbar">
+        <div class="brand">🏥 CareConnect Hospital</div>
+        <a href="/">← Back to Home</a>
+    </div>
+
+    <div class="page-wrap">
+        <div class="search-box">
+            <h1>🔍 Check Appointment Status</h1>
+            <p>Enter your phone number to see your appointment status</p>
+            <form method="POST">
+                <input type="tel" name="patient_phone" required placeholder="Enter your phone number">
+                <button type="submit">Check Status</button>
+            </form>
+        </div>
+
+        {% if appointments is not none %}
+            {% if appointments|length == 0 %}
+                <p class="no-results">No appointments found for this phone number.</p>
+            {% else %}
+                {% for appt in appointments %}
+                <div class="ticket" id="app-{{ loop.index }}">
+                    <div class="ticket-top">
+                        <div class="brand">🏥 CareConnect<small>APPOINTMENT TICKET</small></div>
+                        <div class="status-pill
+                            {% if appt['status'] == 'confirmed' %}pill-approved
+                            {% elif appt['status'] == 'cancelled' %}pill-rejected
+                            {% else %}pill-pending{% endif %}">
+                            {% if appt['status'] == 'confirmed' %}APPROVED
+                            {% elif appt['status'] == 'cancelled' %}REJECTED
+                            {% else %}PENDING{% endif %}
+                        </div>
+                    </div>
+
+                    <div class="ticket-main">
+                        <div class="ticket-token">
+                            <div class="tk-label">TOKEN</div>
+                            <div class="tk-num">{{ appt['token_number'] }}</div>
+                        </div>
+                        <div class="ticket-info">
+                            <div class="name">{{ appt['patient_name'] }}</div>
+                            <div class="doc">Dr. {{ appt['doctor_name'] }}</div>
+                            <div class="row"><b>Problem:</b> {{ appt['problem'] }}</div>
+                            <div class="row"><b>Date:</b> {{ appt['date'] }}</div>
+                            <div class="row"><b>Time:</b> {{ appt['time_slot'] }}</div>
+                        </div>
+                    </div>
+
+                    <div class="perforation"></div>
+
+                    <div class="ticket-footer">
+                        <button class="footer-btn btn-download" onclick="printOne('app-{{ loop.index }}')">⬇️ Download</button>
+                        <form method="POST" action="/patient/appointment/{{ appt['id'] }}/delete" onsubmit="return confirm('Delete this appointment?');" style="flex:1; margin:0;">
+                            <button type="submit" class="footer-btn btn-delete" style="width:100%;">🗑️ Delete</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <script>
+    function printOne(id) {
+        document.getElementById(id).classList.add('printing-now');
+        window.print();
+        document.getElementById(id).classList.remove('printing-now');
+    }
+    </script>
+
+</body>
+</html>

@@ -4,31 +4,111 @@
     <meta charset="UTF-8">
     <title>Book Appointment</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif !important;
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%) !important;
+            display: block !important;
+            min-height: 100vh !important;
+            padding: 50px 20px !important;
+        }
+        .card {
+            max-width: 440px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 12px 35px rgba(12,74,110,0.12);
+            overflow: hidden;
+        }
+        .card-header {
+            background: #0c4a6e;
+            color: white;
+            padding: 26px 28px;
+            text-align: center;
+        }
+        .card-header .icon { font-size: 30px; margin-bottom: 8px; }
+        .card-header h2 { font-size: 19px; font-weight: 700; }
+        .card-header p { font-size: 12px; color: #bae6fd; margin-top: 4px; }
+
+        .card-body { padding: 28px; }
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: #475569;
+            margin-bottom: 6px;
+            margin-top: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+        label:first-of-type { margin-top: 0; }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #dbe3ea;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f8fafc;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #0c4a6e;
+            background: white;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #0c4a6e;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 15px;
+            margin-top: 22px;
+            cursor: pointer;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+            color: #0c4a6e;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+    </style>
 </head>
 <body>
-    <h2>Book Appointment with Dr. {{ doctor['name'] }}</h2>
-    <p>Specialization: {{ doctor['specialization'] }}</p>
+    <div class="card">
+        <div class="card-header">
+            <div class="icon">👨‍⚕️</div>
+            <h2>Book Appointment with Dr. {{ doctor['name'] }}</h2>
+            <p>{{ doctor['specialization'] }}</p>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                <label>Your Name</label>
+                <input type="text" name="patient_name" required placeholder="Enter your full name">
 
-    <form method="POST">
-        <label>Your Name:</label><br>
-        <input type="text" name="patient_name" required><br><br>
+                <label>Phone Number</label>
+                <input type="tel" name="patient_phone" required placeholder="Enter your phone number">
 
-        <label>Phone Number:</label><br>
-        <input type="tel" name="patient_phone" required><br><br>
+                <label>Select Available Slot</label>
+                <select name="slot_id" required>
+                    {% for slot in slots %}
+                    <option value="{{ slot['id'] }}">{{ slot['date'] }} | {{ slot['time_slot'] }}</option>
+                    {% endfor %}
+                </select>
 
-        <label>Select Available Slot:</label><br>
-        <select name="slot_id" required>
-            {% for slot in slots %}
-            <option value="{{ slot['id'] }}">{{ slot['date'] }} | {{ slot['time_slot'] }}</option>
-            {% endfor %}
-        </select><br><br>
+                <label>Problem / Reason for Visit</label>
+                <textarea name="problem" rows="3" required placeholder="Describe your problem"></textarea>
 
-        <label>Problem/Reason for visit:</label><br>
-        <textarea name="problem" rows="3" cols="30" required placeholder="Mee problem enti detail ga cheppandi"></textarea><br><br>
-
-        <button type="submit">Confirm Booking</button>
-    </form>
-
-    <p><a href="/patient/doctors">Back to Doctors List</a></p>
+                <button type="submit">Confirm Booking</button>
+            </form>
+        </div>
+    </div>
+    <a href="/patient/doctors" class="back-link">← Back to Doctors List</a>
 </body>
 </html>

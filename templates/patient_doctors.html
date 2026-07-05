@@ -4,26 +4,126 @@
     <meta charset="UTF-8">
     <title>Find a Doctor</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif !important;
+            background: linear-gradient(135deg, #0c4a6e 0%, #075985 100%) !important;
+            display: block !important;
+            min-height: 100vh !important;
+            padding: 50px 20px !important;
+        }
+        .page-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .page-header h1 {
+            color: white;
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+        .page-header p {
+            color: #bae6fd;
+            font-size: 14px;
+        }
+        .doctor-grid {
+            max-width: 950px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+        }
+        .doctor-card {
+            background: white;
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        .doctor-card .avatar {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            background: #e0f2fe;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+        .doctor-card .name {
+            font-size: 17px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 3px;
+        }
+        .doctor-card .spec {
+            font-size: 13px;
+            color: #0c4a6e;
+            font-weight: 600;
+            background: #e0f2fe;
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-bottom: 14px;
+        }
+        .doctor-card .meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #64748b;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 12px;
+            margin-bottom: 16px;
+        }
+        .doctor-card .meta b { color: #0f172a; }
+        .doctor-card .book-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: #0c4a6e;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .doctor-card .book-btn:hover { background: #075985; }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+            opacity: 0.85;
+        }
+    </style>
 </head>
 <body>
-    <h2>Available Doctors</h2>
-    <table border="1" cellpadding="8">
-        <tr>
-            <th>Name</th>
-            <th>Specialization</th>
-            <th>Experience</th>
-            <th>Fee</th>
-            <th>Action</th>
-        </tr>
+
+    <div class="page-header">
+        <h1>👨‍⚕️ Available Doctors</h1>
+        <p>Choose a doctor to book your appointment</p>
+    </div>
+
+    <div class="doctor-grid">
         {% for doc in doctors %}
-        <tr>
-            <td>{{ doc['name'] }}</td>
-            <td>{{ doc['specialization'] }}</td>
-            <td>{{ doc['experience'] }} years</td>
-            <td>₹{{ doc['fee'] }}</td>
-            <td><a href="/patient/book/{{ doc['id'] }}">Book Appointment</a></td>
-        </tr>
+        <div class="doctor-card">
+            <div class="avatar">🩺</div>
+            <div class="name">Dr. {{ doc['name'] }}</div>
+            <div class="spec">{{ doc['specialization'] }}</div>
+            <div class="meta">
+                <span>Experience: <b>{{ doc['experience'] }} yrs</b></span>
+                <span>Fee: <b>₹{{ doc['fee'] }}</b></span>
+            </div>
+            <a href="/patient/book/{{ doc['id'] }}" class="book-btn">Book Appointment</a>
+        </div>
         {% endfor %}
-    </table>
+    </div>
+
+    <a href="/" class="back-link">← Back to Home</a>
+
 </body>
 </html>
