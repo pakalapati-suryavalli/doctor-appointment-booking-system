@@ -106,11 +106,14 @@
         .back-link { display: block; text-align: center; margin-top: 10px; color: #c4b5fd; text-decoration: none; font-size: 13px; }
 
         @media print {
-            body { visibility: hidden; background: white !important; }
-            .printing-now { visibility: visible; position: absolute; left: 0; top: 0; width: 100%; }
-            .printing-now * { visibility: visible; }
-            .printing-now .ticket-footer { display: none !important; }
-        }
+    body > * { display: none !important; }
+    .page-wrap { display: block !important; }
+    .page-wrap > * { display: none !important; }
+    .page-wrap .printing-now { display: block !important; background: white; }
+    .printing-now .ticket-top,
+    .printing-now .ticket-main { display: flex !important; }
+    .printing-now .ticket-footer { display: none !important; }
+}
     </style>
 </head>
 <body>
