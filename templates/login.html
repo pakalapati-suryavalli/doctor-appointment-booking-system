@@ -2,23 +2,198 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Login — CareConnect Hospital</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100% !important; margin: 0 !important; padding: 0 !important; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif !important;
+            display: flex !important;
+            min-height: 100vh !important;
+        }
+
+        .auth-side {
+            flex: 1;
+            background: linear-gradient(160deg, #0c4a6e 0%, #082f47 100%);
+            color: #ffffff;
+            padding: 70px 55px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .auth-side::before {
+            content: '';
+            position: absolute;
+            top: -80px; right: -80px;
+            width: 260px; height: 260px;
+            border: 1.5px solid rgba(212,175,55,0.25);
+            border-radius: 50%;
+        }
+        .auth-side::after {
+            content: '';
+            position: absolute;
+            bottom: -100px; left: -60px;
+            width: 220px; height: 220px;
+            border: 1.5px solid rgba(212,175,55,0.15);
+            border-radius: 50%;
+        }
+        .auth-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #d4af37;
+            font-size: 12px;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 22px;
+        }
+        .auth-badge::before {
+            content: '';
+            width: 26px; height: 1px;
+            background: #d4af37;
+            display: inline-block;
+        }
+        .auth-side h1 {
+            font-size: 38px;
+            font-weight: 700;
+            line-height: 1.25;
+            margin-bottom: 18px;
+            letter-spacing: -0.5px;
+        }
+        .auth-side p {
+            color: #bcd6e8;
+            font-size: 14.5px;
+            max-width: 320px;
+            line-height: 1.7;
+        }
+        .auth-signature {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(212,175,55,0.3);
+            font-size: 12px;
+            color: #7dd3fc;
+            letter-spacing: 1px;
+        }
+
+        .auth-form-side {
+            flex: 1;
+            background: #f8f9fb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+        .form-box {
+            width: 100%;
+            max-width: 360px;
+        }
+        .form-box .tag {
+            color: #d4af37;
+            font-size: 11.5px;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .form-box h2 {
+            font-size: 27px;
+            font-weight: 700;
+            color: #0c1e2e;
+            margin-bottom: 6px;
+        }
+        .form-box .sub {
+            color: #64748b;
+            font-size: 13.5px;
+            margin-bottom: 32px;
+        }
+        .form-box label {
+            display: block;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 7px;
+            margin-top: 18px;
+            letter-spacing: 0.3px;
+        }
+        .form-box input {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1.5px solid #dde3ea;
+            border-radius: 9px;
+            font-size: 14px;
+            background: white;
+            color: #0c1e2e;
+            transition: border-color 0.2s;
+        }
+        .form-box input:focus {
+            outline: none;
+            border-color: #0c4a6e;
+        }
+        .form-box button {
+            width: 100%;
+            margin-top: 30px;
+            padding: 14px;
+            background: linear-gradient(135deg, #0c4a6e, #082f47);
+            color: white;
+            border: none;
+            border-radius: 9px;
+            font-weight: 700;
+            font-size: 14.5px;
+            letter-spacing: 0.4px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(12,74,110,0.25);
+        }
+        .form-box button:hover {
+            background: linear-gradient(135deg, #0e5680, #0c4a6e);
+        }
+        .switch-link {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 13px;
+            color: #64748b;
+        }
+        .switch-link a {
+            color: #0c4a6e;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .back-home {
+            display: inline-block;
+            margin-bottom: 26px;
+            font-size: 12.5px;
+            color: #64748b;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        @media (max-width: 760px) {
+            body { flex-direction: column; }
+            .auth-side { padding: 40px 30px; }
+        }
+    </style>
 </head>
 <body>
-    <div class="auth-wrapper">
-        <div class="auth-side">
-            <h1>careconnect</h1>
-            <p>Book appointments with trusted doctors, anytime, anywhere.</p>
-        </div>
-        <div class="auth-form-side">
+    <div class="auth-side">
+        <div class="auth-badge">CARECONNECT HOSPITAL</div>
+        <h1>Excellence in<br>Healthcare Access</h1>
+        <p>A trusted platform for doctors and administrators to manage appointments, patients, and care delivery with precision.</p>
+        <div class="auth-signature">Visakhapatnam · Est. CareConnect</div>
+    </div>
+
+    <div class="auth-form-side">
+        <div class="form-box">
+            <a href="/" class="back-home">← Back to Home</a>
+            <div class="tag">STAFF ACCESS</div>
+            <h2>Welcome Back</h2>
+            <p class="sub">Sign in to continue to your dashboard</p>
             <form method="POST">
-                <h2>Welcome Back</h2>
-                <label>Email</label>
-                <input type="email" name="email" required>
+                <label>Email Address</label>
+                <input type="email" name="email" required placeholder="you@careconnect.com">
                 <label>Password</label>
-                <input type="password" name="password" required>
-                <button type="submit">Login</button>
+                <input type="password" name="password" required placeholder="••••••••">
+                <button type="submit">Sign In</button>
             </form>
             <p class="switch-link">Don't have an account? <a href="/signup">Sign up here</a></p>
         </div>

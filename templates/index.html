@@ -78,23 +78,6 @@
             color: #bae6fd;
             margin-top: 15px;
         }
-        .staff-login-left {
-            display: inline-block;
-            margin-top: 18px;
-            padding: 10px 20px;
-            border: 1.5px solid rgba(255,255,255,0.5);
-            border-radius: 8px;
-            color: white;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
-            background: transparent;
-            cursor: pointer;
-            font-family: inherit;
-        }
-        .staff-login-left:hover {
-            background: rgba(255,255,255,0.1);
-        }
         .right-panel {
             flex: 1;
             background: #ffffff;
@@ -170,11 +153,10 @@
             </div>
             <div class="contact">📞 +91 7981793941 · careconnect@hospital.com</div>
 
-            <div id="staffOptions" style="display:none; flex-direction:column; gap:10px; max-width:260px; margin-top:14px;">
+            <div style="display:flex; flex-direction:column; gap:10px; max-width:260px; margin-top:18px;">
                 <a href="/login" style="display:block; padding:12px 18px; border-radius:8px; text-align:center; text-decoration:none; font-weight:600; font-size:13px; background:white; color:#0c4a6e;">🩺 Doctor Login</a>
                 <a href="/login" style="display:block; padding:12px 18px; border-radius:8px; text-align:center; text-decoration:none; font-weight:600; font-size:13px; background:transparent; color:white; border:1.5px solid rgba(255,255,255,0.5);">🛡️ Admin Login</a>
             </div>
-            <button type="button" class="staff-login-left" onclick="var el=document.getElementById('staffOptions'); el.style.display = el.style.display==='flex' ? 'none' : 'flex';">Staff Login →</button>
         </div>
     </div>
 
