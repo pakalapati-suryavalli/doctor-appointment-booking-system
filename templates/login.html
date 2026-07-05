@@ -3,174 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <title>Login — CareConnect Hospital</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html, body { height: 100% !important; margin: 0 !important; padding: 0 !important; }
-        body {
+        * { margin: 0 !important; padding: 0 !important; box-sizing: border-box !important; }
+        html, body {
+            height: 100% !important;
+            width: 100% !important;
             font-family: 'Segoe UI', Arial, sans-serif !important;
+        }
+        body {
             display: flex !important;
+            flex-direction: row !important;
             min-height: 100vh !important;
+            width: 100% !important;
         }
 
         .auth-side {
-            flex: 1;
-            background: linear-gradient(160deg, #0c4a6e 0%, #082f47 100%);
-            color: #ffffff;
-            padding: 70px 55px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
+            flex: 1 1 50% !important;
+            background: linear-gradient(160deg, #0c4a6e 0%, #051f30 100%) !important;
+            color: #ffffff !important;
+            padding: 70px 55px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+            position: relative !important;
+            overflow: hidden !important;
+            min-height: 100vh !important;
         }
         .auth-side::before {
-            content: '';
-            position: absolute;
-            top: -80px; right: -80px;
-            width: 260px; height: 260px;
-            border: 1.5px solid rgba(212,175,55,0.25);
-            border-radius: 50%;
+            content: '' !important;
+            position: absolute !important;
+            top: -70px !important; right: -70px !important;
+            width: 240px !important; height: 240px !important;
+            border: 1.5px solid rgba(212,175,55,0.3) !important;
+            border-radius: 50% !important;
         }
         .auth-side::after {
-            content: '';
-            position: absolute;
-            bottom: -100px; left: -60px;
-            width: 220px; height: 220px;
-            border: 1.5px solid rgba(212,175,55,0.15);
-            border-radius: 50%;
+            content: '' !important;
+            position: absolute !important;
+            bottom: -100px !important; left: -60px !important;
+            width: 220px !important; height: 220px !important;
+            border: 1.5px solid rgba(212,175,55,0.18) !important;
+            border-radius: 50% !important;
         }
         .auth-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: #d4af37;
-            font-size: 12px;
-            letter-spacing: 2px;
-            font-weight: 700;
-            margin-bottom: 22px;
+            color: #d4af37 !important;
+            font-size: 12px !important;
+            letter-spacing: 2.5px !important;
+            font-weight: 700 !important;
+            margin-bottom: 24px !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
         }
         .auth-badge::before {
-            content: '';
-            width: 26px; height: 1px;
-            background: #d4af37;
-            display: inline-block;
+            content: '' !important;
+            width: 28px !important; height: 1px !important;
+            background: #d4af37 !important;
+            display: inline-block !important;
         }
         .auth-side h1 {
-            font-size: 38px;
-            font-weight: 700;
-            line-height: 1.25;
-            margin-bottom: 18px;
-            letter-spacing: -0.5px;
+            font-size: 40px !important;
+            font-weight: 700 !important;
+            line-height: 1.28 !important;
+            margin-bottom: 20px !important;
+            letter-spacing: -0.5px !important;
         }
         .auth-side p {
-            color: #bcd6e8;
-            font-size: 14.5px;
-            max-width: 320px;
-            line-height: 1.7;
+            color: #a9c7db !important;
+            max-width: 340px !important;
+            font-size: 14.5px !important;
+            line-height: 1.75 !important;
         }
         .auth-signature {
-            margin-top: 50px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(212,175,55,0.3);
-            font-size: 12px;
-            color: #7dd3fc;
-            letter-spacing: 1px;
+            margin-top: 45px !important;
+            padding-top: 20px !important;
+            border-top: 1px solid rgba(212,175,55,0.3) !important;
+            font-size: 12px !important;
+            color: #7dd3fc !important;
+            letter-spacing: 1px !important;
         }
 
         .auth-form-side {
-            flex: 1;
-            background: #f8f9fb;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 40px;
+            flex: 1 1 50% !important;
+            background: #f8f9fb !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            padding: 40px !important;
+            min-height: 100vh !important;
         }
-        .form-box {
-            width: 100%;
-            max-width: 360px;
+        .form-box { width: 100% !important; max-width: 360px !important; }
+        .back-home {
+            display: inline-block !important;
+            margin-bottom: 26px !important;
+            font-size: 12.5px !important;
+            color: #94a3b8 !important;
+            text-decoration: none !important;
+            font-weight: 600 !important;
         }
         .form-box .tag {
-            color: #d4af37;
-            font-size: 11.5px;
-            letter-spacing: 2px;
-            font-weight: 700;
-            margin-bottom: 10px;
+            color: #d4af37 !important;
+            font-size: 11.5px !important;
+            letter-spacing: 2px !important;
+            font-weight: 700 !important;
+            margin-bottom: 10px !important;
         }
         .form-box h2 {
-            font-size: 27px;
-            font-weight: 700;
-            color: #0c1e2e;
-            margin-bottom: 6px;
+            font-size: 28px !important;
+            font-weight: 700 !important;
+            color: #0c1e2e !important;
+            margin-bottom: 6px !important;
         }
         .form-box .sub {
-            color: #64748b;
-            font-size: 13.5px;
-            margin-bottom: 32px;
+            color: #64748b !important;
+            font-size: 13.5px !important;
+            margin-bottom: 32px !important;
         }
         .form-box label {
-            display: block;
-            font-size: 12.5px;
-            font-weight: 700;
-            color: #334155;
-            margin-bottom: 7px;
-            margin-top: 18px;
-            letter-spacing: 0.3px;
+            display: block !important;
+            font-size: 12.5px !important;
+            font-weight: 700 !important;
+            color: #334155 !important;
+            margin-bottom: 7px !important;
+            margin-top: 18px !important;
+            letter-spacing: 0.3px !important;
         }
         .form-box input {
-            width: 100%;
-            padding: 13px 15px;
-            border: 1.5px solid #dde3ea;
-            border-radius: 9px;
-            font-size: 14px;
-            background: white;
-            color: #0c1e2e;
-            transition: border-color 0.2s;
+            width: 100% !important;
+            padding: 13px 15px !important;
+            border: 1.5px solid #dde3ea !important;
+            border-radius: 9px !important;
+            font-size: 14px !important;
+            background: white !important;
+            color: #0c1e2e !important;
         }
-        .form-box input:focus {
-            outline: none;
-            border-color: #0c4a6e;
-        }
+        .form-box input:focus { outline: none !important; border-color: #0c4a6e !important; }
         .form-box button {
-            width: 100%;
-            margin-top: 30px;
-            padding: 14px;
-            background: linear-gradient(135deg, #0c4a6e, #082f47);
-            color: white;
-            border: none;
-            border-radius: 9px;
-            font-weight: 700;
-            font-size: 14.5px;
-            letter-spacing: 0.4px;
-            cursor: pointer;
-            box-shadow: 0 8px 20px rgba(12,74,110,0.25);
-        }
-        .form-box button:hover {
-            background: linear-gradient(135deg, #0e5680, #0c4a6e);
+            width: 100% !important;
+            margin-top: 30px !important;
+            padding: 14px !important;
+            background: linear-gradient(135deg, #0c4a6e, #051f30) !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 9px !important;
+            font-weight: 700 !important;
+            font-size: 14.5px !important;
+            letter-spacing: 0.4px !important;
+            cursor: pointer !important;
+            box-shadow: 0 10px 26px rgba(12,74,110,0.3) !important;
         }
         .switch-link {
-            text-align: center;
-            margin-top: 24px;
-            font-size: 13px;
-            color: #64748b;
+            text-align: center !important;
+            margin-top: 24px !important;
+            font-size: 13px !important;
+            color: #64748b !important;
         }
-        .switch-link a {
-            color: #0c4a6e;
-            font-weight: 700;
-            text-decoration: none;
-        }
-        .back-home {
-            display: inline-block;
-            margin-bottom: 26px;
-            font-size: 12.5px;
-            color: #64748b;
-            text-decoration: none;
-            font-weight: 600;
-        }
+        .switch-link a { color: #0c4a6e !important; font-weight: 700 !important; text-decoration: none !important; }
 
         @media (max-width: 760px) {
-            body { flex-direction: column; }
-            .auth-side { padding: 40px 30px; }
+            body { flex-direction: column !important; }
+            .auth-side, .auth-form-side { min-height: auto !important; }
+            .auth-side { padding: 40px 30px !important; }
         }
     </style>
 </head>
