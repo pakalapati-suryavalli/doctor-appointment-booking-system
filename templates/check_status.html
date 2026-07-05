@@ -178,10 +178,21 @@
 
     <script>
     function printOne(id) {
-        document.getElementById(id).classList.add('printing-now');
-        window.print();
-        document.getElementById(id).classList.remove('printing-now');
+    var el = document.getElementById(id);
+    el.classList.add('printing-now');
+
+    function cleanup() {
+        el.classList.remove('printing-now');
+        window.removeEventListener('afterprint', cleanup);
     }
+    window.addEventListener('afterprint', cleanup);
+
+    setTimeout(function () {
+        window.print();
+    }, 50);
+
+    setTimeout(cleanup, 3000);
+}
     </script>
 
 </body>
