@@ -2,27 +2,115 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Doctor Profile</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Doctor Profile — CareConnect Hospital</title>
     <style>
+        * { margin: 0 !important; padding: 0 !important; box-sizing: border-box !important; }
+        html, body { height: 100% !important; width: 100% !important; font-family: 'Segoe UI', Arial, sans-serif !important; }
+        body {
+            min-height: 100vh !important;
+            background: radial-gradient(circle at 20% 20%, #0e3a54, #061824 70%) !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            padding: 40px 20px !important;
+        }
+
         .topbar {
-            width: 100%;
-            max-width: 400px;
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 15px;
+            width: 100% !important;
+            max-width: 520px !important;
+            display: flex !important;
+            justify-content: flex-end !important;
+            margin-bottom: 20px !important;
         }
         .topbar a {
-            background: rgba(255,255,255,0.15);
-            padding: 10px 18px;
-            border-radius: 8px;
-            font-size: 13px;
-            color: white;
-            border: 1px solid rgba(255,255,255,0.4);
+            background: rgba(255,255,255,0.1) !important;
+            padding: 10px 18px !important;
+            border-radius: 8px !important;
+            font-size: 13px !important;
+            color: white !important;
+            border: 1px solid rgba(255,255,255,0.3) !important;
+            text-decoration: none !important;
+            font-weight: 600 !important;
         }
-        .topbar a:hover {
-            background: rgba(255,255,255,0.25);
-            text-decoration: none;
+        .topbar a:hover { background: rgba(255,255,255,0.2) !important; }
+
+        .profile-card {
+            width: 100% !important;
+            max-width: 520px !important;
+            background: #ffffff !important;
+            border-radius: 20px !important;
+            padding: 45px 42px !important;
+            box-shadow: 0 40px 90px rgba(0,0,0,0.45) !important;
+            position: relative !important;
+            overflow: hidden !important;
+        }
+        .profile-card::before {
+            content: '' !important;
+            position: absolute !important;
+            top: -60px !important; right: -60px !important;
+            width: 160px !important; height: 160px !important;
+            border: 1.5px solid rgba(212,175,55,0.2) !important;
+            border-radius: 50% !important;
+        }
+        .badge {
+            color: #d4af37 !important;
+            font-size: 11px !important;
+            letter-spacing: 2px !important;
+            font-weight: 700 !important;
+            margin-bottom: 10px !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+        }
+        .badge::before {
+            content: '' !important;
+            width: 24px !important; height: 1px !important;
+            background: #d4af37 !important;
+            display: inline-block !important;
+        }
+        h1 {
+            font-size: 26px !important;
+            font-weight: 700 !important;
+            color: #0c1e2e !important;
+            margin-bottom: 8px !important;
+        }
+        .sub {
+            color: #64748b !important;
+            font-size: 13.5px !important;
+            margin-bottom: 30px !important;
+            line-height: 1.6 !important;
+        }
+        label {
+            display: block !important;
+            font-size: 12px !important;
+            font-weight: 700 !important;
+            color: #334155 !important;
+            margin-bottom: 6px !important;
+            margin-top: 18px !important;
+            letter-spacing: 0.3px !important;
+        }
+        input {
+            width: 100% !important;
+            padding: 12px 14px !important;
+            border: 1.5px solid #dde3ea !important;
+            border-radius: 9px !important;
+            font-size: 14px !important;
+            background: #f9fafb !important;
+            color: #0c1e2e !important;
+        }
+        input:focus { outline: none !important; border-color: #0c4a6e !important; }
+        button {
+            width: 100% !important;
+            margin-top: 28px !important;
+            padding: 13px !important;
+            background: linear-gradient(135deg, #0c4a6e, #051f30) !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 9px !important;
+            font-weight: 700 !important;
+            font-size: 14.5px !important;
+            cursor: pointer !important;
+            box-shadow: 0 10px 24px rgba(12,74,110,0.3) !important;
         }
     </style>
 </head>
@@ -31,20 +119,23 @@
         <a href="/doctor/appointments">📋 View My Appointments</a>
     </div>
 
-    <h1>👨‍⚕️ Complete Your Doctor Profile</h1>
-    <p>Add your professional details so patients can find and book you</p>
+    <div class="profile-card">
+        <div class="badge">DOCTOR PROFILE</div>
+        <h1>👨‍⚕️ Complete Your Profile</h1>
+        <p class="sub">Add your professional details so patients can find and book you.</p>
 
-    <form method="POST">
-        <label>Specialization:</label><br>
-        <input type="text" name="specialization" placeholder="e.g. Cardiologist" required><br><br>
+        <form method="POST">
+            <label>Specialization</label>
+            <input type="text" name="specialization" placeholder="e.g. Cardiologist" required>
 
-        <label>Experience (years):</label><br>
-        <input type="number" name="experience" required><br><br>
+            <label>Experience (years)</label>
+            <input type="number" name="experience" placeholder="e.g. 8" required>
 
-        <label>Consultation Fee (₹):</label><br>
-        <input type="number" name="fee" required><br><br>
+            <label>Consultation Fee (₹)</label>
+            <input type="number" name="fee" placeholder="e.g. 500" required>
 
-        <button type="submit">Save Profile</button>
-    </form>
+            <button type="submit">Save Profile</button>
+        </form>
+    </div>
 </body>
 </html>
