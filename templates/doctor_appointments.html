@@ -2,41 +2,167 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My Appointments</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Patient Appointments — CareConnect Hospital</title>
+    <style>
+        * { margin: 0 !important; padding: 0 !important; box-sizing: border-box !important; }
+        html, body { width: 100% !important; font-family: 'Segoe UI', Arial, sans-serif !important; }
+        body {
+            background: #f4f6f9 !important;
+            min-height: 100vh !important;
+            padding: 40px 30px !important;
+        }
+
+        .header {
+            max-width: 1100px !important;
+            margin: 0 auto 30px !important;
+            background: linear-gradient(135deg, #0c4a6e, #051f30) !important;
+            color: white !important;
+            padding: 30px 36px !important;
+            border-radius: 16px !important;
+            box-shadow: 0 20px 50px rgba(12,74,110,0.25) !important;
+            position: relative !important;
+            overflow: hidden !important;
+        }
+        .header::before {
+            content: '' !important;
+            position: absolute !important;
+            top: -50px !important; right: -50px !important;
+            width: 160px !important; height: 160px !important;
+            border: 1.5px solid rgba(212,175,55,0.25) !important;
+            border-radius: 50% !important;
+        }
+        .header .badge {
+            color: #d4af37 !important;
+            font-size: 11px !important;
+            letter-spacing: 2px !important;
+            font-weight: 700 !important;
+            margin-bottom: 8px !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+        }
+        .header .badge::before {
+            content: '' !important;
+            width: 24px !important; height: 1px !important;
+            background: #d4af37 !important;
+            display: inline-block !important;
+        }
+        .header h1 { font-size: 26px !important; font-weight: 700 !important; }
+
+        .section {
+            max-width: 1100px !important;
+            margin: 0 auto !important;
+            background: white !important;
+            border-radius: 16px !important;
+            padding: 28px 30px !important;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.06) !important;
+            overflow-x: auto !important;
+        }
+
+        table { width: 100% !important; border-collapse: collapse !important; }
+        thead th {
+            text-align: left !important;
+            font-size: 11.5px !important;
+            letter-spacing: 0.6px !important;
+            color: #64748b !important;
+            font-weight: 700 !important;
+            padding: 10px 14px !important;
+            border-bottom: 1.5px solid #e2e8f0 !important;
+            text-transform: uppercase !important;
+            white-space: nowrap !important;
+        }
+        tbody td {
+            padding: 13px 14px !important;
+            font-size: 13.5px !important;
+            color: #1e293b !important;
+            border-bottom: 1px solid #f1f5f9 !important;
+        }
+        tbody tr:hover { background: #f8fafc !important; }
+
+        .token-badge {
+            display: inline-block !important;
+            background: #f5f3ff !important;
+            color: #4c1d95 !important;
+            font-weight: 800 !important;
+            padding: 4px 11px !important;
+            border-radius: 8px !important;
+            font-size: 12.5px !important;
+        }
+
+        .status-pill {
+            display: inline-block !important;
+            padding: 4px 11px !important;
+            border-radius: 20px !important;
+            font-size: 11px !important;
+            font-weight: 700 !important;
+        }
+        .status-confirmed { background: #dcfce7 !important; color: #166534 !important; }
+        .status-pending { background: #fef9c3 !important; color: #854d0e !important; }
+        .status-cancelled { background: #fee2e2 !important; color: #991b1b !important; }
+
+        .action-link {
+            text-decoration: none !important;
+            font-weight: 700 !important;
+            font-size: 12.5px !important;
+            padding: 5px 10px !important;
+            border-radius: 6px !important;
+        }
+        .approve-link { color: #166534 !important; background: #dcfce7 !important; }
+        .cancel-link { color: #991b1b !important; background: #fee2e2 !important; }
+        .no-action { color: #94a3b8 !important; font-size: 13px !important; }
+    </style>
 </head>
 <body>
-    <h2>Patient Appointments</h2>
-    <table border="1" cellpadding="8">
-        <tr>
-            <th>Token</th>
-            <th>Patient</th>
-            <th>Phone</th>
-            <th>Problem</th>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Status</th>
-            <th>Action</th>
-        </tr>
-        {% for appt in appointments %}
-        <tr>
-            <td>{{ appt['token_number'] }}</td>
-            <td>{{ appt['patient_name'] }}</td>
-            <td>{{ appt['patient_phone'] }}</td>
-            <td>{{ appt['problem'] }}</td>
-            <td>{{ appt['date'] }}</td>
-            <td>{{ appt['time_slot'] }}</td>
-            <td>{{ appt['status'] }}</td>
-            <td>
-                {% if appt['status'] == 'pending' %}
-                <a href="/doctor/appointment/{{ appt['id'] }}/approve">Approve</a> |
-                <a href="/doctor/appointment/{{ appt['id'] }}/cancel">Cancel</a>
-                {% else %}
-                -
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+
+    <div class="header">
+        <div class="badge">CARECONNECT HOSPITAL</div>
+        <h1>📋 Patient Appointments</h1>
+    </div>
+
+    <div class="section">
+        <table>
+            <thead>
+                <tr>
+                    <th>Token</th>
+                    <th>Patient</th>
+                    <th>Phone</th>
+                    <th>Problem</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appt in appointments %}
+                <tr>
+                    <td><span class="token-badge">#{{ appt['token_number'] }}</span></td>
+                    <td>{{ appt['patient_name'] }}</td>
+                    <td>{{ appt['patient_phone'] }}</td>
+                    <td>{{ appt['problem'] }}</td>
+                    <td>{{ appt['date'] }}</td>
+                    <td>{{ appt['time_slot'] }}</td>
+                    <td>
+                        <span class="status-pill
+                            {% if appt['status'] == 'confirmed' %}status-confirmed
+                            {% elif appt['status'] == 'cancelled' %}status-cancelled
+                            {% else %}status-pending{% endif %}">
+                            {{ appt['status']|upper }}
+                        </span>
+                    </td>
+                    <td>
+                        {% if appt['status'] == 'pending' %}
+                        <a href="/doctor/appointment/{{ appt['id'] }}/approve" class="action-link approve-link">Approve</a>
+                        <a href="/doctor/appointment/{{ appt['id'] }}/cancel" class="action-link cancel-link">Cancel</a>
+                        {% else %}
+                        <span class="no-action">—</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
 </body>
 </html>
